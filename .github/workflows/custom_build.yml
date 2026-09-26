@@ -20,13 +20,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install "platformio==6.1.18" "scons==4.7.0"
 
-      - name: Build Custom Tasmota Firmware
+      - name: Build Tasmota 4M Firmware
         run: |
-          export PLATFORMIO_BUILD_FLAGS="-DUSER_CONFIG_OVERRIDE -DUSE_IR_REMOTE_FULL -DUSE_DS18X20"
-          platformio run -e tasmota
+          export PLATFORMIO_BUILD_FLAGS="-DUSER_CONFIG_OVERRIDE -DUSE_IR_REMOTE_FULL -DUSE_DS18X20 -DUSE_IR_RECEIVE"
+          platformio run -e tasmota-4M
 
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
         with:
           name: tasmota-custom
-          path: .pio/build/tasmota/firmware.bin
+          path: .pio/build/tasmota-4M/firmware.bin
