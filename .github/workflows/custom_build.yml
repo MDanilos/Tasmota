@@ -22,7 +22,7 @@ jobs:
 
       - name: Build Tasmota IR Firmware
         run: |
-          platformio run -e tasmota-ir
+          platformio run -e tasmota
 
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
