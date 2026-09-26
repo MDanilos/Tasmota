@@ -20,27 +20,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install "platformio==6.1.18" "scons==4.7.0"
 
-      - name: Direct Configuration Injection
+      - name: Build Tasmota IR Firmware
         run: |
-          # Dopisujemy definicje bezpośrednio na samej górze my_user_config.h
-          cat << 'EOF' > tasmota/my_user_config_custom.h
-          #ifndef CUSTOM_HVAC_CONFIG
-          #define CUSTOM_HVAC_CONFIG
-          #define FRIENDLY_NAME "Tasmota-HVAC-Custom"
-          #define USE_DS18X20
-          #define USE_IR_REMOTE_FULL
-          #endif
-          EOF
-
-          cat tasmota/my_user_config.h >> tasmota/my_user_config_custom.h
-          mv tasmota/my_user_config_custom.h tasmota/my_user_config.h
-
-      - name: Build Tasmota Firmware
-        run: |
-          platformio run -e tasmota
+          platformio run -e tasmota-ir
 
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
         with:
           name: tasmota-custom
-          path: .pio/build/tasmota/firmware.bin
+          path: .pio/build/tasmota-ir/firmware.bin
