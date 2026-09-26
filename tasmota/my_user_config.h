@@ -1521,5 +1521,7 @@
   #define USE_I2S_AAC
   #define USE_I2S_OPUS
 #endif // USE_I2S_ALL
+#define USE_DS18X20
+#define USE_IR_REMOTE_FULL
 
 #endif  // _MY_USER_CONFIG_H_
