@@ -22,7 +22,8 @@ jobs:
 
       - name: Build Tasmota 4M Firmware
         run: |
-          platformio run -e tasmota-4M -f "-DUSER_CONFIG_OVERRIDE"
+          export PLATFORMIO_BUILD_FLAGS="-D USER_CONFIG_OVERRIDE"
+          platformio run -e tasmota-4M
 
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
