@@ -22,8 +22,7 @@ jobs:
 
       - name: Build Tasmota 4M Firmware
         run: |
-          export PLATFORMIO_BUILD_FLAGS="-DUSER_CONFIG_OVERRIDE -DUSE_IR_REMOTE_FULL -DUSE_DS18X20 -DUSE_IR_RECEIVE"
-          platformio run -e tasmota-4M
+          platformio run -e tasmota-4M -f "-DUSER_CONFIG_OVERRIDE"
 
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
