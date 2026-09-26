@@ -20,10 +20,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install "platformio==6.1.18" "scons==4.7.0"
 
-      - name: Enable User Config Override
+      - name: Direct Configuration Injection
         run: |
-          echo '[env:tasmota]' > platformio_override.ini
-          echo 'build_flags = ${env.build_flags} -DUSER_CONFIG_OVERRIDE' >> platformio_override.ini
+          # Dopisujemy definicje bezpośrednio na samej górze my_user_config.h
+          cat << 'EOF' > tasmota/my_user_config_custom.h
+          #ifndef CUSTOM_HVAC_CONFIG
+          #define CUSTOM_HVAC_CONFIG
+          #define FRIENDLY_NAME "Tasmota-HVAC-Custom"
+          #define USE_DS18X20
+          #define USE_IR_REMOTE_FULL
+          #endif
+          EOF
+
+          cat tasmota/my_user_config.h >> tasmota/my_user_config_custom.h
+          mv tasmota/my_user_config_custom.h tasmota/my_user_config.h
 
       - name: Build Tasmota Firmware
         run: |
