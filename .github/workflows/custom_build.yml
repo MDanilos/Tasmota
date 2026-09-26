@@ -10,18 +10,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Install PlatformIO
-        run: pip install platformio
-
-      - name: Build Custom Firmware
+      - name: Run TasmoCompiler Engine
         run: |
-          export PLATFORMIO_BUILD_FLAGS="-DUSER_CONFIG_OVERRIDE"
-          platformio run -e tasmota
+          cp tasmota/user_config_override_sample.h tasmota/user_config_override.h || true
+          docker run --rm -v ${{ github.workspace }}:/tasmota -w /tasmota blakadder/tasmo-compiler:latest \
+            /bin/bash -c "platformio run -e tasmota"
 
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
