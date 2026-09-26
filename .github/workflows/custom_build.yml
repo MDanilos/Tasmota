@@ -26,6 +26,7 @@ jobs:
 
       - name: Build Tasmota Firmware
         run: |
+          export PLATFORMIO_BUILD_FLAGS="-DUSER_CONFIG_OVERRIDE"
           platformio run -e tasmota
 
       - name: Upload Binary Artifact
