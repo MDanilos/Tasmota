@@ -20,13 +20,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install "platformio==6.1.18" "scons==4.7.0"
 
-      - name: Copy override header
+      - name: Enable User Config Override
         run: |
-          cp user_config_override.h tasmota/user_config_override.h || true
+          echo '[env:tasmota]' > platformio_override.ini
+          echo 'build_flags = ${env.build_flags} -DUSER_CONFIG_OVERRIDE' >> platformio_override.ini
 
       - name: Build Tasmota Firmware
         run: |
-          export PLATFORMIO_BUILD_FLAGS="-DUSER_CONFIG_OVERRIDE"
           platformio run -e tasmota
 
       - name: Upload Binary Artifact
