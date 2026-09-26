@@ -88,7 +88,19 @@ Examples :
 */
 
 
+#ifdef USER_CONFIG_OVERRIDE
 
+// Włączenie obsługi czujników temperatury DS18B20
+#ifndef USE_DS18X20
+#define USE_DS18X20
+#endif
+
+// Włączenie pełnej obsługi klimatyzatorów IR (IRHVAC)
+#ifndef USE_IR_REMOTE_FULL
+#define USE_IR_REMOTE_FULL
+#endif
+
+#endif
 
 
 #endif  // _USER_CONFIG_OVERRIDE_H_
